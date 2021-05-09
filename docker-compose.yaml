@@ -1,0 +1,36 @@
+version: '3.1'
+services:
+  db:
+    image: mysql
+    container_name: safeskiing-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3308:3306"
+    networks:
+      - safeskiing
+    volumes:
+      - ./safeSkiing-storage/database.sql:/docker-entrypoint-initdb.d/database.sql
+      - ./safeSkiing-storage/init.sql:/docker-entrypoint-initdb.d/init.sql
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: root
+    ports:
+      - "8080:80"
+    networks:
+      - safeskiing
+  dashboard:
+    build: ./safeskiing-dashboard
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
+    networks:
+      - safeskiing
+    restart: on-failure
+  
+networks:
+  safeskiing:
