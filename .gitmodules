@@ -1,0 +1,12 @@
+[submodule "safeSkiing-storage"]
+	path = safeSkiing-storage
+	url = https://github.com/MCPS2021/safeSkiing-storage
+[submodule "safeskiing-dashboard"]
+	path = safeskiing-dashboard
+	url = https://github.com/MCPS2021/safeskiing-dashboard
+[submodule "safeSkiing-simulator"]
+	path = safeSkiing-simulator
+	url = https://github.com/MCPS2021/safeSkiing-simulator
+[submodule "esp32_ble_scanner"]
+	path = esp32_ble_scanner
+	url = https://github.com/MCPS2021/esp32_ble_scanner
