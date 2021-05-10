@@ -1,61 +1,47 @@
 version: '3.1'
 services:
   mqtt_broker:
-    image: eclipse-mosquitto
+    image: eclipse-mosquitto:1.6.14
     ports:
       - 1883:1883
       - 8883:8883
     volumes:
       - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
     restart: unless-stopped
-  db:
+  safeskiing-db:
     image: mysql
-    container_name: safeskiing-db
     environment:
       MYSQL_ROOT_PASSWORD: root
     ports:
       - "3308:3306"
-    networks:
-      - safeskiing
     volumes:
       - ./safeSkiing-storage/database.sql:/docker-entrypoint-initdb.d/database.sql
       - ./safeSkiing-storage/init.sql:/docker-entrypoint-initdb.d/init.sql
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
     environment:
-      PMA_HOST: db
+      PMA_HOST: safeskiing-db
       PMA_USER: root
       PMA_PASSWORD: root
     ports:
       - "8080:80"
-    networks:
-      - safeskiing
   dashboard:
     build: ./safeskiing-dashboard
     depends_on:
-      - db
+      - safeskiing-db
       - mqtt_broker
     ports:
       - "3000:3000"
-    networks:
-      - safeskiing
     restart: on-failure
   simulator:
     build: ./safeSkiing-simulator
     depends_on:
       - mqtt_broker
-    networks:
-      - safeskiing
   storage-manager:
     build: ./safeSkiing-storage
     depends_on:
-      - db
+      - safeskiing-db
       - mqtt_broker
     volumes:
       - ./safeSkiing-storage/config-docker.yml:/code/config.yml
-    networks:
-      - safeskiing
     restart: on-failure
-  
-networks:
-  safeskiing:
