@@ -52,7 +52,7 @@ services:
       - db
       - mqtt_broker
     volumes:
-      - ./safeSkiing-storage/config_docker.yml:/code/config.yml
+      - ./safeSkiing-storage/config-docker.yml:/code/config.yml
     networks:
       - safeskiing
     restart: on-failure
