@@ -8,8 +8,13 @@ During this tough period characterized by COVID-19 pandemic, many companies and 
 
 ## How to Build and Run
 We are using docker to create a running instance of the whole system, including also a data simulator.
-You can build and run it simply by cloning the repository and run the following command in the root folder:
-`docker-compose up`
+You can build and run it simply by cloning the repository and run the following command in the root folder: `docker-compose up`
+
+Remember after you've cloned the repository to initiliaze the git submodules by using:
+```
+git submodule update --init --recursive
+```
+
 
 ## Team
 - Eschini Renato @reny77
